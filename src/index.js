@@ -1,17 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import HomePage from './HomePage';
+import CreateLobby from './CreateLobby';
+import JoinLobby from './JoinLobby';
+import Lobby from './lobby/Lobby'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <Routes>
+        <Route path = "/" element = {<HomePage/>} />
+        <Route path = "createlobby" element = {<CreateLobby/>} />
+        <Route path = "joinlobby" element = {<JoinLobby/>} />
+        <Route path = "lobby" element = {<Lobby/>} />
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
