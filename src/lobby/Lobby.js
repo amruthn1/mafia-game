@@ -33,8 +33,12 @@ class Lobby extends React.Component {
             socket.send(["inLobby", rid, uid])
             socket.onAny((data) => {
                 console.log(data)
-                if (data.split("//")[1] !== uid) {
-                    aplyrs.push(data.split("//")[1])
+                if (data[0] === "updatedLobby") {
+                    aplyrs = data[1]
+                    this.forceUpdate()
+                } else if (data[0].split("//")[1] !== uid) {
+                    aplyrs.push(data[0].split("//")[1])
+                    socket.send(["updateLobby", aplyrs, rid])
                     this.forceUpdate()
                 }
             })        

@@ -20,7 +20,10 @@ io.on("connection", (socket) => {
         } else if (data[0] === "inLobby") {
             console.log("emitting new player")
             socket.join(data[1])
-            io.in(data[1]).emit("6" + "//" + data[2]);
+            io.in(data[1]).emit(["6" + "//" + data[2], ""]);
+        } else if (data[0] === "updateLobby") {
+            socket.join(data[2])
+            socket.to(data[2]).emit(["updatedLobby", data[1]])
         }
     })
 });
