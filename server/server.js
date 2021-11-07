@@ -11,9 +11,16 @@ const io = new Server(httpServer, {
 
 io.on("connection", (socket) => {
     socket.on("message", (data) => {
+        console.log("message recieved")
+        console.log(data)
         if (data[0] === "createLobby") {
             var rid = (Math.random() + 1).toString(36).substring(2)
             io.to(data[1]).emit(rid)
+            console.log("emitting new lobby id")
+        } else if (data[0] === "inLobby") {
+            console.log("emitting new player")
+            socket.join(data[1])
+            io.in(data[1]).emit("6" + "//" + data[2]);
         }
     })
 });

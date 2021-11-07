@@ -7,7 +7,6 @@ import Lobby from './lobby/Lobby'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 ReactDOM.render(
-  <React.StrictMode>
     <BrowserRouter>
       <Routes>
         <Route path = "/" element = {<HomePage/>} />
@@ -15,8 +14,7 @@ ReactDOM.render(
         <Route path = "joinlobby" element = {<JoinLobby/>} />
         <Route path = "lobby" element = {<Lobby/>} />
       </Routes>
-    </BrowserRouter>
-  </React.StrictMode>,
+    </BrowserRouter>,
   document.getElementById('root')
 );
 

@@ -21,7 +21,7 @@ class CreateLobby extends React.Component {
         if (!gotRID) {
             return (
                 <div>
-                    <h3>Create Lobby</h3>
+                    <h3>Loading.....</h3>
                     <div>
                         <h3>{uid}</h3>
                     </div>
