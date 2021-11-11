@@ -24,6 +24,10 @@ io.on("connection", (socket) => {
         } else if (data[0] === "updateLobby") {
             socket.join(data[2])
             socket.to(data[2]).emit(["updatedLobby", data[1]])
+        } else if (data[0] === "disconnect") {
+            console.log("disconnected")
+            socket.join(data[2])
+            socket.to(data[2]).emit(["disconnected", data[1]])
         }
     })
 });
