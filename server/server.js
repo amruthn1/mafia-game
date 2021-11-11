@@ -28,6 +28,9 @@ io.on("connection", (socket) => {
             console.log("disconnected")
             socket.join(data[2])
             socket.to(data[2]).emit(["disconnected", data[1]])
+        } else if (data[0] === "movetoGame") {
+            socket.join(data[2])
+            socket.to(data[2]).emit(['movetoGame'])
         }
     })
 });

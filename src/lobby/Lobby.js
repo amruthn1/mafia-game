@@ -2,14 +2,21 @@ import React from "react";
 import io from 'socket.io-client';
 import ReactHtmlParser from 'react-html-parser'
 import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
+import { Navigate } from 'react-router-dom'
 
 let rid;
 let uid;
 let lrid;
 let aplyrs = [];
+let plyrs = [];
 let socket;
+let shouldSwitch = false;
 
 class Lobby extends React.Component {
+    state = {
+        l: false
+    }
     constructor() {
         super()
         this.init();
@@ -18,7 +25,7 @@ class Lobby extends React.Component {
         aplyrs[0] = '<div>' + temp + "<img src = 'https://www.pngkit.com/png/full/189-1893809_crown-clipart-simple-crown-simple-black-crown-png.png' height = '10px' width = '10px'/></div>"
     }
     render() {
-        if (aplyrs.length > 1) {
+        if (aplyrs.length > 1 && !shouldSwitch) { //one killer, one sheriff, one medic, two townsperson
             return (
                 <div>
                     {rid}
@@ -31,7 +38,13 @@ class Lobby extends React.Component {
                     <br></br>
                     <br></br>
                     <br></br>
-                    <Button>Start!</Button>
+                    <Button component = {Link} to = {"/game?" + btoa(plyrs.join('@') + "@" + rid)}>Start!</Button>
+                </div>
+            )
+        } else if (shouldSwitch) {
+            return (
+                <div>
+                    <Navigate to = {"/game?" + btoa(plyrs.join('@') + "@" + rid)}></Navigate>
                 </div>
             )
         } else {
@@ -49,7 +62,7 @@ class Lobby extends React.Component {
                     <br></br>
                 </div>
             )
-        }  
+        }
     }
     inLobby(){
         socket = io('ws://localhost:8000', {
@@ -61,17 +74,23 @@ class Lobby extends React.Component {
                 console.log(data)
                 if (data[0] === "updatedLobby") {
                     aplyrs = data[1]
+                    plyrs = data[1]
                     this.forceUpdate()
                 } else if (data[0] === "disconnected") {
                     console.log("splicing")
                     aplyrs.splice(aplyrs.indexOf(data[1]), 1)
                     socket.send(["updateLobby", aplyrs, rid])
                     this.forceUpdate()
+                } else if (data[0] === "movetoGame") {  
+                    console.log("move")
+                    shouldSwitch = true
+                    this.setState({l: true})
                 } else if (data[0].split("//")[1] !== uid) {
                     aplyrs.push("<div>" + data[0].split("//")[1] + "</div>")
+                    plyrs.push(data[0].split("//")[1])
                     socket.send(["updateLobby", aplyrs, rid])
                     this.forceUpdate()
-                }
+                } 
             }) 
             socket.on('disconnect', () => {
                 socket.send(['disconnect', uid, rid])
@@ -83,6 +102,7 @@ class Lobby extends React.Component {
         uid = (window.location.search).split("&")[1]
         rid = lrid.substring(1)
         aplyrs.push(uid)
+        plyrs.push(uid)
         console.log(rid, uid)
     }
 }

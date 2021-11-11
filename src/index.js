@@ -7,6 +7,7 @@ const HomePage = lazy(() => import('./HomePage'))
 const CreateLobby = lazy(() => import('./CreateLobby'))
 const JoinLobby = lazy(() => import('./JoinLobby'))
 const Lobby = lazy(() => import('./lobby/Lobby'))
+const Game = lazy(() => import('./game/Game'))
 
 ReactDOM.render(
   <Suspense fallback = {<div><img src = {Loader}></img></div>}>
@@ -16,6 +17,7 @@ ReactDOM.render(
         <Route path = "createlobby" element = {<CreateLobby/>} />
         <Route path = "joinlobby" element = {<JoinLobby/>} />
         <Route path = "lobby" element = {<Lobby/>} />
+        <Route path = "game" element = {<Game/>} />
       </Routes>
     </BrowserRouter>
   </Suspense>,
