@@ -27,19 +27,12 @@ class JoinLobby extends React.Component {
             return (
                 <div>
                     <h3>Loading.....</h3>
-                    <div>
-                        <h3>{uid}</h3>
-                        <br></br>
-                        <h3>{RID}</h3>
-                    </div>
                 </div>
             )
         } else {
             return (
                 <div>
-                    <h3>Joining Lobby....</h3>
                     <div>
-                        <h3>{uid}</h3>
                         <Navigate to = {"/lobby?" + RID + "&" + uid}></Navigate>
                     </div>
                 </div>

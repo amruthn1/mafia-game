@@ -9,7 +9,6 @@ let rid;
 let uid;
 let lrid;
 let aplyrs = [];
-let plyrs = [];
 let socket;
 let shouldSwitch = false;
 
@@ -38,13 +37,12 @@ class Lobby extends React.Component {
                     <br></br>
                     <br></br>
                     <br></br>
-                    <Button component = {Link} to = {"/game?" + btoa(plyrs.join('@') + "@" + rid)}>Start!</Button>
-                </div>
+                    <Button component = {Link} to = {"/game?" + btoa(aplyrs.join('@') + "@" + rid)}>Start!</Button>                </div>
             )
         } else if (shouldSwitch) {
             return (
                 <div>
-                    <Navigate to = {"/game?" + btoa(plyrs.join('@') + "@" + rid)}></Navigate>
+                    <Navigate to = {"/game?" + btoa(aplyrs.join('@') + "@" + rid)}></Navigate>
                 </div>
             )
         } else {
@@ -74,7 +72,6 @@ class Lobby extends React.Component {
                 console.log(data)
                 if (data[0] === "updatedLobby") {
                     aplyrs = data[1]
-                    plyrs = data[1]
                     this.forceUpdate()
                 } else if (data[0] === "disconnected") {
                     console.log("splicing")
@@ -87,7 +84,6 @@ class Lobby extends React.Component {
                     this.setState({l: true})
                 } else if (data[0].split("//")[1] !== uid) {
                     aplyrs.push("<div>" + data[0].split("//")[1] + "</div>")
-                    plyrs.push(data[0].split("//")[1])
                     socket.send(["updateLobby", aplyrs, rid])
                     this.forceUpdate()
                 } 
@@ -102,8 +98,8 @@ class Lobby extends React.Component {
         uid = (window.location.search).split("&")[1]
         rid = lrid.substring(1)
         aplyrs.push(uid)
-        plyrs.push(uid)
         console.log(rid, uid)
     }
 }
+
 export default Lobby;

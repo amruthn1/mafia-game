@@ -22,17 +22,12 @@ class CreateLobby extends React.Component {
             return (
                 <div>
                     <h3>Loading.....</h3>
-                    <div>
-                        <h3>{uid}</h3>
-                    </div>
                 </div>
             )
         } else {
             return (
                 <div>
-                    <h3>Create Lobby</h3>
                     <div>
-                        <h3>{uid}</h3>
                         <Navigate to = {"/lobby?" + ndata + "&" + uid}></Navigate>
                     </div>
                 </div>
