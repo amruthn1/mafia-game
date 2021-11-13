@@ -5,22 +5,22 @@ let uid;
 let temp;
 let RID;
 let reload = false;
+let sstorage;
 
 class JoinLobby extends React.Component {
-    state = {
-        garb: false
-    }
     constructor(){
         super()
         temp = ((window.location.search).split("=")[1])
         uid = temp.split("&")[0]
         RID = temp.split("&")[1]
+        sstorage = window.sessionStorage;
+        sstorage.setItem('uid', uid)
         console.log("joinlobby", uid)
         this.joinLobby = this.joinLobby.bind(this)
+        this.state = {
+            garb: false
+        }
         this.joinLobby();
-    }
-    componentWillMount(){
-        this.joinLobby = this.joinLobby.bind(this)
     }
     render(){
         if (!reload) {
@@ -38,6 +38,9 @@ class JoinLobby extends React.Component {
                 </div>
             )
         } 
+    }
+    componentDidMount(){
+        
     }
     joinLobby(){
         reload = true;

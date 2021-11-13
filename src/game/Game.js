@@ -1,7 +1,7 @@
 import React from "react";
 import io from 'socket.io-client';
-
-let socket, temp, tempa, rid;
+import Config from '../config.json'
+let socket, temp, tempa, rid, sstorage = window.sessionStorage;;
 
 class Game extends React.Component {
     constructor() {
@@ -19,12 +19,16 @@ class Game extends React.Component {
         )
     }
     init() {
-        socket = io('ws://localhost:8000', {
+        socket = io(Config["server-url"], {
             'sync disconnect on unload': true
         })
         socket.on('connect', () => {
-            console.log("generating roles")
-            socket.send(["movetoGame", tempa, rid])
+            console.log("generating roles", tempa)
+            if (tempa[0] === sstorage.getItem('uid')) {
+                socket.send(["movetoGame", tempa, rid])
+            } else {
+                console.log('alt')
+            }
         })
     }
     generateRoles() {

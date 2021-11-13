@@ -1,20 +1,23 @@
 import React from "react";
 import io from 'socket.io-client';
 import { Navigate } from 'react-router-dom'
-
+import Config from './config.json'
 let uid;
 let socket;
 let gotRID = false;
 let ndata = '';
-
+let sstorage;
 class CreateLobby extends React.Component {
-    state = {
-        reload: false
-    }
     constructor(){
         super()
         uid = ((window.location.search).split("=")[1])
+        sstorage = window.sessionStorage;
+        sstorage.setItem('uid', uid)
         console.log("createlobby", uid)
+        this.createLobby = this.createLobby.bind(this)
+        this.state = {
+            reload: false
+        }
         this.createLobby();
     }
     render(){
@@ -35,7 +38,7 @@ class CreateLobby extends React.Component {
         } 
     }
     createLobby(){
-        socket = io("ws://localhost:8000") 
+        socket = io(Config["server-url"]) 
         socket.on("connect", () => {
             socket.send(["createLobby", socket.id])
             socket.onAny(data => {

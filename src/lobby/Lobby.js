@@ -1,9 +1,10 @@
 import React from "react";
 import io from 'socket.io-client';
-import ReactHtmlParser from 'react-html-parser'
+import ReactHtmlParser from 'react-html-parser';
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import { Navigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom';
+import Config from '../config.json';
 
 let rid;
 let uid;
@@ -18,6 +19,7 @@ class Lobby extends React.Component {
     }
     constructor() {
         super()
+        this.inLobby = this.inLobby.bind(this)
         this.init();
         this.inLobby();
         let temp = aplyrs[0]
@@ -46,6 +48,12 @@ class Lobby extends React.Component {
                 </div>
             )
         } else {
+            for (let i = 0; i < aplyrs.length; i++) {
+                if (aplyrs[i].includes("%20")) {
+                    console.log('iterating')
+                    aplyrs[i].replace('/%20/g', " ");
+                }
+            }
             return (
                 <div>
                     {rid}
@@ -63,7 +71,7 @@ class Lobby extends React.Component {
         }
     }
     inLobby(){
-        socket = io('ws://localhost:8000', {
+        socket = io(Config["server-url"], {
             'sync disconnect on unload': true })
         socket.on('connect', () => {
             console.log("connected")
