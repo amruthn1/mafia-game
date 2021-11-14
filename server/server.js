@@ -8,8 +8,7 @@ const httpServer = createServer((req, res) => {
 });
 const io = new Server(httpServer, {
     cors: {
-        origin: ["https://mafiagame.surge.sh/", "http://localhost:3000"],
-        methods: ["GET", "POST"]
+        origin: '*',
     }
 });
 
