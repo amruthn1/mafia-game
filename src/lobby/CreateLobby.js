@@ -1,7 +1,7 @@
 import React from "react";
 import io from 'socket.io-client';
 import { Navigate } from 'react-router-dom'
-import Config from './config.json'
+import Config from '../config.json'
 let uid;
 let socket;
 let gotRID = false;

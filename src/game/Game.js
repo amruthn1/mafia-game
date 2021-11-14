@@ -1,7 +1,9 @@
 import React from "react";
 import io from 'socket.io-client';
 import Config from '../config.json'
-let socket, temp, tempa, rid, sstorage = window.sessionStorage;;
+
+let socket, temp, tempa, rid, sstorage
+sstorage = window.sessionStorage;
 
 class Game extends React.Component {
     constructor() {

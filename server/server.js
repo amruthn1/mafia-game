@@ -1,10 +1,14 @@
 const { createServer } = require("http");
 const { Server } = require("socket.io");
-
-const httpServer = createServer();
+const fs = require('fs')
+const httpServer = createServer((req, res) => {
+    res.writeHead(200, { 'content-type': 'text/html' })
+    fs.createReadStream('index.html').pipe(res)
+    console.log(req)
+});
 const io = new Server(httpServer, {
     cors: {
-        origin: "http://localhost:3000",
+        origin: ["https://mafiagame.surge.sh/", "http://localhost:3000"],
         methods: ["GET", "POST"]
     }
 });
@@ -33,6 +37,9 @@ io.on("connection", (socket) => {
             socket.to(data[2]).emit(['movetoGame'])
         }
     })
+    socket.on('disconnect', () => {
+        socket.emit('disconnected', socket.id)
+    })
 });
 
-httpServer.listen(8000);
+httpServer.listen(process.env.PORT || 8000);

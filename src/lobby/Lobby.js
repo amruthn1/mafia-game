@@ -12,6 +12,7 @@ let lrid;
 let aplyrs = [];
 let socket;
 let shouldSwitch = false;
+let sstorage = window.sessionStorage;
 
 class Lobby extends React.Component {
     state = {
@@ -39,7 +40,8 @@ class Lobby extends React.Component {
                     <br></br>
                     <br></br>
                     <br></br>
-                    <Button component = {Link} to = {"/game?" + btoa(aplyrs.join('@') + "@" + rid)}>Start!</Button>                </div>
+                    <StartButton/>
+                    </div>
             )
         } else if (shouldSwitch) {
             return (
@@ -107,6 +109,18 @@ class Lobby extends React.Component {
         rid = lrid.substring(1)
         aplyrs.push(uid)
         console.log(rid, uid)
+    }
+}
+
+function StartButton(){
+    let tempplyrs = []
+    tempplyrs[0] = aplyrs[0]
+    let t = tempplyrs[0].split("<div>")[1]
+    tempplyrs[0] = t.split("<img")[0]
+    if (sstorage.getItem('uid') === tempplyrs[0]){
+        return <Button component = {Link} to = {"/game?" + btoa(aplyrs.join('@') + "@" + rid)}>Start!</Button> 
+    } else {
+        return <div></div>
     }
 }
 

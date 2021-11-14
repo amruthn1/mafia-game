@@ -4,13 +4,13 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Loader from './assets/loader.gif'
 
 const HomePage = lazy(() => import('./HomePage'))
-const CreateLobby = lazy(() => import('./CreateLobby'))
-const JoinLobby = lazy(() => import('./JoinLobby'))
+const CreateLobby = lazy(() => import('./lobby/CreateLobby'))
+const JoinLobby = lazy(() => import('./lobby/JoinLobby'))
 const Lobby = lazy(() => import('./lobby/Lobby'))
 const Game = lazy(() => import('./game/Game'))
 
 ReactDOM.render(
-  <Suspense fallback = {<div><img src = {Loader}></img></div>}>
+  <Suspense fallback = {<div><img alt = "Loading..." src = {Loader}></img></div>}>
     <BrowserRouter>
       <Routes>
         <Route path = "/" element = {<HomePage/>} />
