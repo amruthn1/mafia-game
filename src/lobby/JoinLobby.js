@@ -12,15 +12,19 @@ class JoinLobby extends React.Component {
         super()
         temp = ((window.location.search).split("=")[1])
         uid = temp.split("&")[0]
-        RID = temp.split("&")[1]
-        sstorage = window.sessionStorage;
-        sstorage.setItem('uid', uid)
-        console.log("joinlobby", uid)
-        this.joinLobby = this.joinLobby.bind(this)
-        this.state = {
-            garb: false
+        if (uid === "" || uid === undefined || uid === null) {
+            alert("Please enter a valid UID!")  
+        } else {
+            RID = temp.split("&")[1]
+            sstorage = window.sessionStorage;
+            sstorage.setItem('uid', uid)
+            console.log("joinlobby", uid)
+            this.joinLobby = this.joinLobby.bind(this)
+            this.state = {
+                garb: false
+            }
+            this.joinLobby();
         }
-        this.joinLobby();
     }
     render(){
         if (!reload) {

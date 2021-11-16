@@ -2,6 +2,7 @@ import React from "react";
 import io from 'socket.io-client';
 import { Navigate } from 'react-router-dom'
 import Config from '../config.json'
+
 let uid;
 let socket;
 let gotRID = false;
@@ -11,14 +12,18 @@ class CreateLobby extends React.Component {
     constructor(){
         super()
         uid = ((window.location.search).split("=")[1])
-        sstorage = window.sessionStorage;
-        sstorage.setItem('uid', uid)
-        console.log("createlobby", uid)
-        this.createLobby = this.createLobby.bind(this)
-        this.state = {
-            reload: false
+        if (uid === "" || uid === undefined || uid === null) {
+            alert("Please enter a valid UID!")  
+        } else {
+            sstorage = window.sessionStorage;
+            sstorage.setItem('uid', uid)
+            console.log("createlobby", uid)
+            this.createLobby = this.createLobby.bind(this)
+            this.state = {
+                reload: false
+            }
+            this.createLobby();
         }
-        this.createLobby();
     }
     render(){
         if (!gotRID) {

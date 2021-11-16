@@ -18,12 +18,12 @@ class HomePage extends React.Component {
     return (
       <div>
         <h3>Home Page</h3>
-        <Button component = {Link} to = {"/createlobby?uid=" + this.state.createTextValue} onClick = {this.createLobby} id = "createLobby">Create Lobby</Button>
+        <Button component = {Link} to = {"/createlobby?uid=" + this.state.createTextValue} id = "createLobby">Create Lobby</Button>
           <div id = "createtextfield">
               <input id = "createtextfielda" value = {this.state.createTextValue} onChange = {this.updateCreateTextField}></input>
           </div>
         <br></br>
-        <Button component = {Link} to = {"/joinlobby?uid=" + this.state.joinTextValue + "&" + this.state.joinLobbyID} onClick = {this.joinLobby} id = "joinLobby">Join Lobby</Button>
+        <Button component = {Link} to = {"/joinlobby?uid=" + this.state.joinTextValue + "&" + this.state.joinLobbyID} id = "joinLobby">Join Lobby</Button>
           <div id = "jointextfield">
             <input id = "jointextfielda" value = {this.state.joinTextValue} onChange = {this.updateJoinTextField}></input>
           </div>
@@ -32,19 +32,6 @@ class HomePage extends React.Component {
           </div>
       </div>
     )
-  }
-
-  createLobby = () => {
-    if (this.state.createTextValue === "" || this.state.createTextValue == null) {
-      console.log("retry")
-    } else {
-    }
-  }
-  joinLobby = () => {
-    if (this.state.joinTextValue === "" || this.state.joinTextValue == null) {
-      console.log("retry")
-    } else {
-    }
   }
   updateJoinTextField = (text) => {
     this.setState({
