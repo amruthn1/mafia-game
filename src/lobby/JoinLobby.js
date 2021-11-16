@@ -1,11 +1,8 @@
 import React from "react";
 import { Navigate } from 'react-router-dom'
 
-let uid;
-let temp;
-let RID;
+let uid, temp, RID, sstorage;
 let reload = false;
-let sstorage;
 
 class JoinLobby extends React.Component {
     constructor(){
