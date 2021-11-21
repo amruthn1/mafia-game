@@ -20,11 +20,13 @@ class Lobby extends React.Component {
     }
     constructor() {
         super()
-        this.inLobby = this.inLobby.bind(this)
         this.init();
         this.inLobby();
         let temp = aplyrs[0]
         aplyrs[0] = '<div>' + temp + "<img src = 'https://www.pngkit.com/png/full/189-1893809_crown-clipart-simple-crown-simple-black-crown-png.png' height = '10px' width = '10px'/></div>"
+    }
+    componentWillMount(){
+        this.inLobby = this.inLobby.bind(this)
     }
     render() {
         if (aplyrs.length > 1 && !shouldSwitch) { //one killer, one sheriff, one medic, two townsperson

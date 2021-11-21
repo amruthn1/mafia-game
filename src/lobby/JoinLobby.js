@@ -16,12 +16,14 @@ class JoinLobby extends React.Component {
             sstorage = window.sessionStorage;
             sstorage.setItem('uid', uid)
             console.log("joinlobby", uid)
-            this.joinLobby = this.joinLobby.bind(this)
             this.state = {
                 garb: false
             }
             this.joinLobby();
         }
+    }
+    componentWillMount(){
+        this.joinLobby = this.joinLobby.bind(this)
     }
     render(){
         if (!reload) {

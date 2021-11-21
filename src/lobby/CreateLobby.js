@@ -11,6 +11,7 @@ let sstorage;
 class CreateLobby extends React.Component {
     constructor(){
         super()
+        console.log((window.location.search))
         uid = ((window.location.search).split("=")[1])
         if (uid === "" || uid === undefined || uid === null) {
             alert("Please enter a valid UID!")  
@@ -18,12 +19,14 @@ class CreateLobby extends React.Component {
             sstorage = window.sessionStorage;
             sstorage.setItem('uid', uid)
             console.log("createlobby", uid)
-            this.createLobby = this.createLobby.bind(this)
             this.state = {
                 reload: false
             }
             this.createLobby();
         }
+    }
+    componentWillMount(){
+        this.createLobby = this.createLobby.bind(this)
     }
     render(){
         if (!gotRID) {
