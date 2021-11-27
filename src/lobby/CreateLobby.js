@@ -11,14 +11,12 @@ let sstorage;
 class CreateLobby extends React.Component {
     constructor(){
         super()
-        console.log((window.location.search))
         uid = ((window.location.search).split("=")[1])
         if (uid === "" || uid === undefined || uid === null) {
             alert("Please enter a valid UID!")  
         } else {
             sstorage = window.sessionStorage;
             sstorage.setItem('uid', uid)
-            console.log("createlobby", uid)
             this.state = {
                 reload: false
             }
@@ -51,7 +49,6 @@ class CreateLobby extends React.Component {
             socket.send(["createLobby", socket.id])
             socket.onAny(data => {
                 if (data !== null) {
-                    console.log(data) //lobbyid
                     socket.emit('end')
                     gotRID = true;
                     ndata = data;

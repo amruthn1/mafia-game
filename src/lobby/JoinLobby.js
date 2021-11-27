@@ -15,7 +15,6 @@ class JoinLobby extends React.Component {
             RID = temp.split("&")[1]
             sstorage = window.sessionStorage;
             sstorage.setItem('uid', uid)
-            console.log("joinlobby", uid)
             this.state = {
                 garb: false
             }

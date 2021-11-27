@@ -1,3 +1,4 @@
 {
-    "server-url" : "ws://localhost:8000/"
+    "server-url" : "ws://localhost:8000",
+    "maxplayers" : 1
 }

@@ -2,34 +2,39 @@ import React from "react";
 import io from 'socket.io-client';
 import ReactHtmlParser from 'react-html-parser';
 import { Button } from "@mui/material";
-import { Link } from "react-router-dom";
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from "react-router-dom";
 import Config from '../config.json';
 
-let rid;
-let uid;
-let lrid;
+let rid, uid, lrid, lobbyhost, socket;
 let aplyrs = [];
-let socket;
+let plyrids = [];
 let shouldSwitch = false;
+let leaveRoom = false;
 let sstorage = window.sessionStorage;
 
 class Lobby extends React.Component {
     state = {
-        l: false
+        l: false,
     }
     constructor() {
         super()
         this.init();
         this.inLobby();
         let temp = aplyrs[0]
+        lobbyhost = temp
         aplyrs[0] = '<div>' + temp + "<img src = 'https://www.pngkit.com/png/full/189-1893809_crown-clipart-simple-crown-simple-black-crown-png.png' height = '10px' width = '10px'/></div>"
     }
     componentWillMount(){
         this.inLobby = this.inLobby.bind(this)
     }
     render() {
-        if (aplyrs.length > 1 && !shouldSwitch) { //one killer, one sheriff, one medic, two townsperson
+        if (leaveRoom) {
+            return (
+                <div>
+                    <Navigate to = "/"></Navigate>
+                </div>
+            )
+        } else if (aplyrs.length > Config.maxplayers && !shouldSwitch) { //one killer, one sheriff, one medic, two townsperson
             return (
                 <div>
                     {rid}
@@ -54,7 +59,6 @@ class Lobby extends React.Component {
         } else {
             for (let i = 0; i < aplyrs.length; i++) {
                 if (aplyrs[i].includes("%20")) {
-                    console.log('iterating')
                     aplyrs[i].replace('/%20/g', " ");
                 }
             }
@@ -78,30 +82,47 @@ class Lobby extends React.Component {
         socket = io(Config["server-url"], {
             'sync disconnect on unload': true })
         socket.on('connect', () => {
-            console.log("connected")
             socket.send(["inLobby", rid, uid])
             socket.onAny((data) => {
-                console.log(data)
                 if (data[0] === "updatedLobby") {
                     aplyrs = data[1]
+                    plyrids = data[2]
                     this.forceUpdate()
                 } else if (data[0] === "disconnected") {
-                    console.log("splicing")
-                    aplyrs.splice(aplyrs.indexOf(data[1]), 1)
-                    socket.send(["updateLobby", aplyrs, rid])
-                    this.forceUpdate()
+                    if (plyrids.includes(data[1])) {
+                        if (aplyrs[plyrids.indexOf(data[1])] === sstorage.getItem('uid')){
+                            console.log('host leaving end game')
+                            socket.send(['endLobby', rid])
+                            leaveRoom = true;
+                            this.forceUpdate()
+                        } else {                   
+                            aplyrs.splice(plyrids.indexOf(data[1]), 1)
+                            plyrids.splice(plyrids.indexOf(data[1]), 1)
+                            if (lobbyhost === sstorage.getItem('uid')) {
+                                socket.send(["sendRefresh", rid])
+                            }
+                            this.forceUpdate()
+                        }
+                    }
                 } else if (data[0] === "movetoGame") {  
-                    console.log("move")
                     shouldSwitch = true
                     this.setState({l: true})
-                } else if (data[0].split("//")[1] !== uid) {
-                    aplyrs.push("<div>" + data[0].split("//")[1] + "</div>")
-                    socket.send(["updateLobby", aplyrs, rid])
+                } else if (data[0] === "leaveRoom") {
+                    console.log('came')
+                    leaveRoom = true;
                     this.forceUpdate()
-                } 
+                } else if (data[0].split("//")[1] !== uid) {
+                    plyrids.push(data[1])
+                    aplyrs.push("<div>" + data[0].split("//")[1] + "</div>")
+                    socket.send(["updateLobby", aplyrs, rid, plyrids])
+                    this.forceUpdate()
+                } else if (data[0].split("//")[1] === uid) {
+                    plyrids.push(data[1])
+                }
             }) 
             socket.on('disconnect', () => {
                 socket.send(['disconnect', uid, rid])
+                console.log(['disconnect', uid, rid])
             })       
         })
     }
@@ -110,7 +131,6 @@ class Lobby extends React.Component {
         uid = (window.location.search).split("&")[1]
         rid = lrid.substring(1)
         aplyrs.push(uid)
-        console.log(rid, uid)
     }
 }
 

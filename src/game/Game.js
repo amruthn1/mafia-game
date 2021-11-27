@@ -10,7 +10,6 @@ class Game extends React.Component {
         super();
         temp = (window.location.search).substring(1)
         tempa = atob(temp).split("@")
-        console.log("running")
         rid = tempa[tempa.length - 1]
         tempa.splice(-1, 1)
         this.parseData()
@@ -25,26 +24,23 @@ class Game extends React.Component {
             'sync disconnect on unload': true
         })
         socket.on('connect', () => {
-            console.log("generating roles", tempa)
             if (tempa[0] === sstorage.getItem('uid')) {
                 socket.send(["movetoGame", tempa, rid])
             } else {
-                console.log('alt')
             }
         })
     }
     generateRoles() {
         //socket.send(["generateRoles", tempa, rid])
+        console.log("isgenerating")
     }
     parseData() {
         let t = tempa[0].split("<div>")[1]
         tempa[0] = t.split("<img")[0]
         for (let i = 0; i < tempa.length - 1; i++) {
-            console.log("iterating")
             let y = tempa[i + 1].split("<div>")[1]
             tempa[i + 1] = y.split("</div>")[0]
         }
-        console.log(rid, tempa)
         this.init()
     }
 }
