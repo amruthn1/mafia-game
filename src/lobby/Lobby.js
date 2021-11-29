@@ -36,19 +36,19 @@ class Lobby extends React.Component {
             )
         } else if (aplyrs.length > Config.maxplayers && !shouldSwitch) { //one killer, one sheriff, one medic, two townsperson
             return (
-                <div>
-                    {rid}
+                <div className = "text-center">
+                    <div>{rid}</div>
                     <br></br>
                     <br></br>
                     <br></br>
                     <ul>
-                        {aplyrs.map((msg) => <h3 key = {aplyrs.indexOf(msg)}>{ReactHtmlParser(msg)}</h3>)}
+                        {aplyrs.map((msg) => <h3 className = "text-center" key = {aplyrs.indexOf(msg)}>{ReactHtmlParser(msg)}</h3>)}
                     </ul>
                     <br></br>
                     <br></br>
                     <br></br>
                     <StartButton/>
-                    </div>
+                </div>
             )
         } else if (shouldSwitch) {
             return (

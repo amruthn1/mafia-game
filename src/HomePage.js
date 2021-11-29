@@ -16,19 +16,22 @@ class HomePage extends React.Component {
 
   render(){
     return (
-      <div>
-        <h3>Home Page</h3>
+      <div className = "text-center">
+        <br/>
+        <h3 className = "text-5xl">Home Page</h3>
+        <br/>
         <Button component = {Link} to = {"/createlobby?uid=" + this.state.createTextValue} id = "createLobby">Create Lobby</Button>
           <div id = "createtextfield">
-              <input id = "createtextfielda" value = {this.state.createTextValue} onChange = {this.updateCreateTextField}></input>
+              <input className = "outline-black focus:outline-none focus:ring focus:border-blue-300" id = "createtextfielda" value = {this.state.createTextValue} onChange = {this.updateCreateTextField}></input>
           </div>
         <br></br>
         <Button component = {Link} to = {"/joinlobby?uid=" + this.state.joinTextValue + "&" + this.state.joinLobbyID} id = "joinLobby">Join Lobby</Button>
           <div id = "jointextfield">
-            <input id = "jointextfielda" value = {this.state.joinTextValue} onChange = {this.updateJoinTextField}></input>
+            <input className = "outline-black focus:outline-none focus:ring focus:border-blue-300" id = "jointextfielda" value = {this.state.joinTextValue} onChange = {this.updateJoinTextField}></input>
           </div>
+          <br/>
           <div id = "lobbytextfield">
-            <input id = "lobbytextfielda" value = {this.state.joinLobbyID} onChange = {this.updateLobbyTextField}></input>
+            <input className = "outline-black focus:outline-none focus:ring focus:border-blue-300" id = "lobbytextfielda" value = {this.state.joinLobbyID} onChange = {this.updateLobbyTextField}></input>
           </div>
       </div>
     )
