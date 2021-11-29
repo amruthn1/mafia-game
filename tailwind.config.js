@@ -1,11 +1,9 @@
 module.exports = {
   purge: [],
-  darkMode: false, 
+  darkMode: 'class', 
   theme: {
-    extend: {},
   },
   variants: {
-    extend: {},
   },
-  plugins: [],
+  plugins: [require("nightwind")],
 }

@@ -20,9 +20,14 @@ class Lobby extends React.Component {
         super()
         this.init();
         this.inLobby();
-        let temp = aplyrs[0]
+        let temp = aplyrs[0] 
         lobbyhost = temp
-        aplyrs[0] = '<div>' + temp + "<img src = 'https://www.pngkit.com/png/full/189-1893809_crown-clipart-simple-crown-simple-black-crown-png.png' height = '10px' width = '10px'/></div>"
+        aplyrs[0] = '<div>' + temp + "</div>"
+        if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
+            aplyrs = [...new Set(aplyrs)];
+            plyrids = [...new Set(plyrids)];
+            this.render()
+        }
     }
     componentWillMount(){
         this.inLobby = this.inLobby.bind(this)
@@ -63,7 +68,7 @@ class Lobby extends React.Component {
                 }
             }
             return (
-                <div>
+                <div className = "text-center">
                     {rid}
                     <br></br>
                     <br></br>
@@ -106,9 +111,8 @@ class Lobby extends React.Component {
                     }
                 } else if (data[0] === "movetoGame") {  
                     shouldSwitch = true
-                    this.setState({l: true})
+                    this.forceUpdate()
                 } else if (data[0] === "leaveRoom") {
-                    console.log('came')
                     leaveRoom = true;
                     this.forceUpdate()
                 } else if (data[0].split("//")[1] !== uid) {
@@ -122,7 +126,6 @@ class Lobby extends React.Component {
             }) 
             socket.on('disconnect', () => {
                 socket.send(['disconnect', uid, rid])
-                console.log(['disconnect', uid, rid])
             })       
         })
     }
@@ -138,7 +141,7 @@ function StartButton(){
     let tempplyrs = []
     tempplyrs[0] = aplyrs[0]
     let t = tempplyrs[0].split("<div>")[1]
-    tempplyrs[0] = t.split("<img")[0]
+    tempplyrs[0] = t.split("</div>")[0]
     if (sstorage.getItem('uid') === tempplyrs[0]){
         return <Button component = {Link} to = {"/game?" + btoa(aplyrs.join('@') + "@" + rid)}>Start!</Button> 
     } else {

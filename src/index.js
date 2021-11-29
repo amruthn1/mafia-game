@@ -1,8 +1,10 @@
 import React, {lazy, Suspense} from 'react';
 import ReactDOM from 'react-dom';
 import { Routes, Route, BrowserRouter } from 'react-router-dom'
-import Loader from './assets/loader.gif'
 import './index.css';
+import { Helmet } from 'react-helmet'
+import nightwind from 'nightwind/helper';
+import Loader from './common/Loader'
 
 const HomePage = lazy(() => import('./HomePage'))
 const CreateLobby = lazy(() => import('./lobby/CreateLobby'))
@@ -11,7 +13,10 @@ const Lobby = lazy(() => import('./lobby/Lobby'))
 const Game = lazy(() => import('./game/Game'))
 
 ReactDOM.render(
-  <Suspense fallback = {<div><img className = "object-center" alt = "Loading..." src = {Loader}></img></div>}>
+  <Suspense fallback = {<Loader></Loader>}>
+    <Helmet>
+      <script>{nightwind.init()}</script>
+    </Helmet>
       <BrowserRouter>
         <Routes>
           <Route path = "/" element = {<HomePage/>} />

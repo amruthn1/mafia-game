@@ -2,6 +2,7 @@ import React from "react";
 import io from 'socket.io-client';
 import { Navigate } from 'react-router-dom'
 import Config from '../config.json'
+import Loader from '../common/Loader'
 
 let uid;
 let socket;
@@ -30,7 +31,7 @@ class CreateLobby extends React.Component {
         if (!gotRID) {
             return (
                 <div>
-                    <h3>Loading.....</h3>
+                    <Loader/>
                 </div>
             )
         } else {

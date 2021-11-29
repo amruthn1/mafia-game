@@ -24,7 +24,8 @@ class Game extends React.Component {
             'sync disconnect on unload': true
         })
         socket.on('connect', () => {
-            if (tempa[0] === sstorage.getItem('uid')) {
+            console.log(tempa)
+            if (tempa[0] === (sstorage.getItem('uid') + '</div>')) {
                 socket.send(["movetoGame", tempa, rid])
             } else {
             }
