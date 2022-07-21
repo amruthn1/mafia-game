@@ -1,5 +1,6 @@
 import React from "react";
 import { Navigate } from 'react-router-dom'
+import Loader from '../common/Loader'
 
 let uid, temp, RID, sstorage;
 let reload = false;
@@ -28,7 +29,7 @@ class JoinLobby extends React.Component {
         if (!reload) {
             return (
                 <div>
-                    <h3>Loading.....</h3>
+                    <Loader/>
                 </div>
             )
         } else {

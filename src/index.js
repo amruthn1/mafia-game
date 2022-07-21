@@ -1,6 +1,6 @@
 import React, {lazy, Suspense} from 'react';
-import ReactDOM from 'react-dom';
-import { Routes, Route, BrowserRouter } from 'react-router-dom'
+import {createRoot} from 'react-dom/client';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import './index.css';
 import { Helmet } from 'react-helmet'
 import nightwind from 'nightwind/helper';
@@ -12,7 +12,10 @@ const JoinLobby = lazy(() => import('./lobby/JoinLobby'))
 const Lobby = lazy(() => import('./lobby/Lobby'))
 const Game = lazy(() => import('./game/Game'))
 
-ReactDOM.render(
+const container = document.getElementById('root')
+const root = createRoot(container)
+
+root.render(
   <Suspense fallback = {<Loader></Loader>}>
     <Helmet>
       <script>{nightwind.init()}</script>
@@ -26,7 +29,6 @@ ReactDOM.render(
           <Route path = "/game" element = {<Game/>} />
         </Routes>
         </BrowserRouter>
-  </Suspense>,
-  document.getElementById('root')
-);
+  </Suspense>
+)
 
