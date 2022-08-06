@@ -47,7 +47,7 @@ class Lobby extends React.Component {
                     <br></br>
                     <br></br>
                     <ul>
-                        {aplyrs.map((msg) => <h3 className = "text-center" key = {aplyrs.indexOf(msg)}>{ReactHtmlParser(msg)}</h3>)}
+                        {aplyrs.map((msg) => <h3 className = "text-center" key = {aplyrs.indexOf(msg)}>{ReactHtmlParser(this.addSpace(msg))}</h3>)}
                     </ul>
                     <br></br>
                     <br></br>
@@ -74,7 +74,7 @@ class Lobby extends React.Component {
                     <br></br>
                     <br></br>
                     <ul>
-                        {aplyrs.map((msg) => <h3 key = {aplyrs.indexOf(msg)}>{ReactHtmlParser(msg)}</h3>)}
+                        {aplyrs.map((msg) => <h3 key = {aplyrs.indexOf(msg)}>{ReactHtmlParser(this.addSpace(msg))}</h3>)}
                     </ul>
                     <br></br>
                     <br></br>
@@ -134,6 +134,9 @@ class Lobby extends React.Component {
         uid = (window.location.search).split("&")[1]
         rid = lrid.substring(1)
         aplyrs.push(uid)
+    }
+    addSpace(text){
+        return text.replace("%20", " ")
     }
 }
 

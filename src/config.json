@@ -1,4 +1,4 @@
 {
-    "server-url" : "ws://localhost:8000/",
+    "server-url" : "wss://wsmfgm.herokuapp.com/",
     "maxplayers" : 1
 }

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
-import nightwind from 'nightwind/helper';
 
 class HomePage extends React.Component {
   state = {
@@ -36,8 +35,6 @@ class HomePage extends React.Component {
             <input className = "outline-black focus:outline-none focus:ring focus:border-blue-300" id = "lobbytextfielda" value = {this.state.joinLobbyID} onChange = {this.updateLobbyTextField} onFocus = {this.handlePretextJoinID} onBlur = {this.handlePretextJoinID}></input>
           </div>
           <br></br>
-          <br></br>
-          <button onClick={() => nightwind.toggle()}>Dark Mode</button>
       </div>
     )
   }
